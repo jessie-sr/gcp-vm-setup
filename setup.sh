@@ -23,9 +23,13 @@ sudo apt update && sudo apt upgrade -y
 echo "Installing Docker..."
 sudo apt install -y docker.io
 
+# Add the current user to the Docker group to allow non-root access to Docker
 echo "Configuring Docker permissions..."
 sudo usermod -aG docker $USER
-echo "Please log out and back in to apply Docker group changes or run 'newgrp docker' in this session."
+echo "Docker group changes applied. Logging in this session to apply permissions..."
+newgrp docker <<EOF
+
+# Start a subshell where Docker permissions are applied
 
 # Install Node.js and npm, required for installing code-server
 echo "Installing Node.js and npm..."
@@ -41,14 +45,14 @@ echo "Starting code-server..."
 PASSWORD=$CODE_SERVER_PW code-server --bind-addr=0.0.0.0:8080 &
 
 # Deploy Jupyter Notebook using Docker
-# Maps port 8888 on the host to port 8888 in the container
-# Mounts ~/jupyter-data to /home/jovyan/work inside the container for persistent storage
 echo "Setting up Jupyter Notebook..."
 docker run -d \
     --name jupyter-notebook \
     -p 8888:8888 \
     -v ~/jupyter-data:/home/jovyan/work \
     jupyter/base-notebook
+
+EOF
 
 # Install and configure UFW (Uncomplicated Firewall) to allow only SSH traffic
 echo "Configuring firewall..."
