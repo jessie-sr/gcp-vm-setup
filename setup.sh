@@ -82,11 +82,8 @@ if [ $? -ne 0 ]; then
 fi
 
 # Set up an SSH tunnel to forward local port 8080 to remote port 8080 for code-server
-echo "Setting up SSH Tunnel for code-server..."
-ssh -L 8080:localhost:8080 $USERNAME@$EXTERNAL_IP -N &
-
 # Set up an SSH tunnel to forward local port 8888 to remote port 8888 for Jupyter Notebook
-echo "Setting up SSH Tunnel for Jupyter Notebook..."
-ssh -L 8888:localhost:8888 $USERNAME@$EXTERNAL_IP -N &
+echo "Setting up SSH Tunnel for code-server and Jupyter Notebook..."
+ssh -L 0.0.0.0:8080:localhost:8080 -L 0.0.0.0:8888:localhost:8888 $USERNAME@$EXTERNAL_IP -N
 
 echo "Setup complete! You can access code-server at http://localhost:8080 and Jupyter Notebook at http://localhost:8888."
