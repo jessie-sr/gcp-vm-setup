@@ -23,10 +23,9 @@ sudo apt update && sudo apt upgrade -y
 echo "Installing Docker..."
 sudo apt install -y docker.io
 
-# Allow Docker to run without sudo for the current user
 echo "Configuring Docker permissions..."
 sudo usermod -aG docker $USER
-newgrp docker
+echo "Please log out and back in to apply Docker group changes or run 'newgrp docker' in this session."
 
 # Install Node.js and npm, required for installing code-server
 echo "Installing Node.js and npm..."
