@@ -13,7 +13,7 @@ EXTERNAL_IP=$2      # The external IP of the remote server
 CODE_SERVER_PW=$3   # Password to log in to code-server
 EMAIL_ADDR=$4       # Email address used for generating the SSH key
 
-echo "Using USERNAME=$USERNAME, EXTERNAL_IP=$EXTERNAL_IP"
+echo "Using USERNAME=$USERNAME, EXTERNAL_IP=$EXTERNAL_IP, CODE_SERVER_PW=$CODE_SERVER_PW, EMAIL_ADDR=$EMAIL_ADDR"
 
 # Update and upgrade system packages to ensure the system is up-to-date
 echo "Updating system packages..."
@@ -62,9 +62,21 @@ if [ ! -f ~/.ssh/id_rsa ]; then
     ssh-keygen -t rsa -b 4096 -C "$EMAIL_ADDR" -N "" -f ~/.ssh/id_rsa
 fi
 
-# Copy the public SSH key to the remote server for passwordless authentication
-echo "Adding SSH public key to the remote server..."
-ssh-copy-id -i ~/.ssh/id_rsa.pub $USERNAME@$EXTERNAL_IP
+# Add public key to the remote server manually
+echo "Manually adding SSH public key to the remote server..."
+SSH_KEY=$(cat ~/.ssh/id_rsa.pub)
+
+ssh -o StrictHostKeyChecking=no $USERNAME@$EXTERNAL_IP <<EOF
+    mkdir -p ~/.ssh
+    chmod 700 ~/.ssh
+    echo "$SSH_KEY" >> ~/.ssh/authorized_keys
+    chmod 600 ~/.ssh/authorized_keys
+EOF
+
+if [ $? -ne 0 ]; then
+    echo "Failed to add public SSH key to the remote server. Exiting."
+    exit 1
+fi
 
 # Set up an SSH tunnel to forward local port 8080 to remote port 8080 for code-server
 echo "Setting up SSH Tunnel for code-server..."
