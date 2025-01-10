@@ -69,10 +69,12 @@ fi
 # Add public key to the remote server manually
 echo "Manually adding SSH public key to the remote server..."
 SSH_KEY=$(cat ~/.ssh/id_rsa.pub)
-mkdir -p ~/.ssh
-chmod 700 ~/.ssh
-echo "$SSH_KEY" >> ~/.ssh/authorized_keys
-chmod 600 ~/.ssh/authorized_keys
+
+ssh -o StrictHostKeyChecking=no $USERNAME@$EXTERNAL_IP "
+    mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    echo '$SSH_KEY' >> ~/.ssh/authorized_keys
+    chmod 600 ~/.ssh/authorized_keys
+"
 
 if [ $? -ne 0 ]; then
     echo "Failed to add public SSH key to the remote server. Exiting."
