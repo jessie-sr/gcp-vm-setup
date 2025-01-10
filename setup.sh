@@ -69,17 +69,9 @@ fi
 # Add public key to the remote server manually
 echo "Manually adding SSH public key to the remote server..."
 SSH_KEY=$(cat ~/.ssh/id_rsa.pub)
-
-ssh -o StrictHostKeyChecking=no $USERNAME@$EXTERNAL_IP "
-    mkdir -p ~/.ssh && chmod 700 ~/.ssh
-    echo '$SSH_KEY' >> ~/.ssh/authorized_keys
-    chmod 600 ~/.ssh/authorized_keys
-"
-
-if [ $? -ne 0 ]; then
-    echo "Failed to add public SSH key to the remote server. Exiting."
-    exit 1
-fi
+mkdir -p ~/.ssh && chmod 700 ~/.ssh
+echo $SSH_KEY >> ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
 
 # Set up an SSH tunnel to forward local port 8080 to remote port 8080 for code-server
 # Set up an SSH tunnel to forward local port 8888 to remote port 8888 for Jupyter Notebook
