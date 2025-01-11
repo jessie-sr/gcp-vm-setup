@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # Check if required arguments are provided
-# Usage: ./setup.sh <USERNAME> <EXTERNAL_IP> <CODE_SERVER_PW> <EMAIL_ADDR>
+# Usage: 
+# chmod +x install.sh
+# ./install.sh <CODE_SERVER_PW>
+
 if [ "$#" -ne 1 ]; then
     echo "Usage: $0 <CODE_SERVER_PW>"
     exit 1
@@ -56,4 +59,3 @@ echo "Configuring firewall..."
 sudo apt install -y ufw
 sudo ufw allow ssh
 sudo ufw enable
-
