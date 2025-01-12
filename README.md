@@ -60,8 +60,6 @@ This guide walks you through creating an Ubuntu VM on GCP, installing Jupyter No
 1. In the GCP console, go to **Compute Engine** > **VM Instances**.  
 2. Next to your new instance, click the **SSH** button to open a browser-based terminal.  
 
-![Open up SSH Terminal](imgs/ssh-terminal.png "Caption: Opening up a browser-based terminal")
-
 ---
 
 <a name="clone-repo"></a>
