@@ -1,4 +1,4 @@
-# Set Up an Ubuntu VM on Google Cloud Platform (GCP) with Jupyter Notebook and Code Server
+# Set Up an Ubuntu VM on Google Cloud Platform (GCP) with Code Server and Jupyter Notebook
 
 This guide walks you through creating an Ubuntu VM on GCP, installing Code Server and Jupyter Notebook, and securely accessing these services via SSH tunneling from your local machine.  
 
