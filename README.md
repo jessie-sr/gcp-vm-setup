@@ -1,7 +1,8 @@
 # Set Up an Ubuntu VM on Google Cloud Platform (GCP) with Jupyter Notebook and Code-Server
 
 This guide walks you through creating an Ubuntu VM on GCP, installing Jupyter Notebook and code-server, and securely accessing these services via SSH tunneling from your local machine.  
-*(You can insert an image or link here to illustrate the final architecture or VM setup. Example link: [Example Architecture Diagram](#))*  
+
+ [![](https://mermaid.ink/img/pako:eNqdkk9rAjEQxb_KEKFYcGGLILqHgrrQP2gRrT104yFmE3cxm5FsUivqd2_WqghtD3VOM3kvvzeBbAnHVJCISIVrnjFjYTCmGnx1kwFypmDIeJZrMYMgAEomk0d4dVoLBfURGltCO2yHcANtX7eUeNc99BJKHvojeBtCfTp32jqvzL6xvcqxo2TsdAlVeFAK8yEMoIYKeOBRsoN-cqlOn367_-xWG-vVF7RijriEXEOMfHmJ81Xh4uSH-cD887FVSM_g2i8AXc5FWR62-qc_PiWUdqMEdEHmSkW1tkybUjZKa3Apolqz2Tz2wTpPbRbdrT4bHBWaqBaG4SWhdyRIyTut1jWE_pkgZOcqQnwlgTRIIUzB8tT_uG1FpMRmohCURL5NhWROWUqo3nsrcxYnG81JZI0TDWLQLTISSaZKP7lVyqyIc7YwrDifrph-RzzN-y-jxOyG?type=png)](https://mermaid.live/edit#pako:eNqdkk9rAjEQxb_KEKFYcGGLILqHgrrQP2gRrT104yFmE3cxm5FsUivqd2_WqghtD3VOM3kvvzeBbAnHVJCISIVrnjFjYTCmGnx1kwFypmDIeJZrMYMgAEomk0d4dVoLBfURGltCO2yHcANtX7eUeNc99BJKHvojeBtCfTp32jqvzL6xvcqxo2TsdAlVeFAK8yEMoIYKeOBRsoN-cqlOn367_-xWG-vVF7RijriEXEOMfHmJ81Xh4uSH-cD887FVSM_g2i8AXc5FWR62-qc_PiWUdqMEdEHmSkW1tkybUjZKa3Apolqz2Tz2wTpPbRbdrT4bHBWaqBaG4SWhdyRIyTut1jWE_pkgZOcqQnwlgTRIIUzB8tT_uG1FpMRmohCURL5NhWROWUqo3nsrcxYnG81JZI0TDWLQLTISSaZKP7lVyqyIc7YwrDifrph-RzzN-y-jxOyG) 
 
 ---
 
@@ -24,44 +25,32 @@ This guide walks you through creating an Ubuntu VM on GCP, installing Jupyter No
 
 1. Log in to [Google Cloud Console](https://console.cloud.google.com).
 
-   <!-- Insert an image showing the GCP Console homepage -->
-   ![GCP Console Homepage](YOUR_IMAGE_FILENAME.png "Caption: GCP Console Homepage")
-
 2. Navigate to **Compute Engine** > **VM Instances**.
-
-   <!-- Insert an image showing the navigation to VM Instances -->
-   ![Navigate to VM Instances](YOUR_IMAGE_FILENAME.png "Caption: Location of Compute Engine > VM Instances")
 
 3. Click **Create Instance**.
 
-   <!-- Insert an image showing the Create Instance button -->
-   ![Create Instance Button](YOUR_IMAGE_FILENAME.png "Caption: The Create Instance button")
-
 4. Configure the VM:
 
-   <!-- Insert images step by step to show each configuration setting -->
    - **Name**: Choose a descriptive name (e.g., `dev-environment`).  
-     ![Setting the VM Name](YOUR_IMAGE_FILENAME.png "Caption: Example of a descriptive VM name")
 
    - **Region/Zone**: Select your preferred region/zone.  
-     ![Selecting Region and Zone](YOUR_IMAGE_FILENAME.png "Caption: Demonstration of choosing a region/zone")
 
    - **Machine Type**: Choose a suitable machine type (e.g., `e2-medium` with 2 vCPUs and 4 GB memory).  
-     ![Machine Type Selection](YOUR_IMAGE_FILENAME.png "Caption: Example of choosing machine type e2-medium")
+
+     ![Machine Configuration](imgs/machine-config.png "Caption: Example of choosing machine type e2-medium")
 
    - **Boot Disk**:
      - Select **Ubuntu** as the operating system.
      - Choose the latest LTS version (e.g., **Ubuntu 20.04 LTS**).
      - Set disk size (e.g., **10 GB**).
 
-     ![Boot Disk Selection](YOUR_IMAGE_FILENAME.png "Caption: Selecting Ubuntu 20.04 LTS and 10 GB disk size")
+     ![Boot Disk Selection](imgs/boot-disk.png "Caption: Selecting Ubuntu 20.04 LTS and 10 GB disk size")
 
    - **Firewall**: Check **Allow HTTP traffic** and **Allow HTTPS traffic**.  
-     ![Enabling Firewall Rules](YOUR_IMAGE_FILENAME.png "Caption: Allowing HTTP and HTTPS traffic")
+
+     ![Enabling Firewall Rules](imgs/firewall.png "Caption: Allowing HTTP and HTTPS traffic")
 
 5. Click **Create** to launch the instance.
-
-   ![VM Creation](YOUR_IMAGE_FILENAME.png "Caption: Final step to create the VM")
 
 ---
 
@@ -70,7 +59,8 @@ This guide walks you through creating an Ubuntu VM on GCP, installing Jupyter No
 
 1. In the GCP console, go to **Compute Engine** > **VM Instances**.  
 2. Next to your new instance, click the **SSH** button to open a browser-based terminal.  
-*(Optionally, insert a screenshot showing the SSH button.)*
+
+![Open up SSH Terminal](imgs/ssh-terminal.png "Caption: Opening up a browser-based terminal")
 
 ---
 
@@ -104,8 +94,6 @@ chmod +x install.sh
 - **`<CODE_SERVER_PW>`**: Replace this placeholder with your desired password for code-server authentication.
 - You will be prompted to confirm installation steps if necessary.
 
-*(Consider adding a screenshot or link to the repository’s README for more details.)*
-
 ---
 
 <a name="setup-ssh-keys-local"></a>
@@ -123,8 +111,6 @@ cat ~/.ssh/id_rsa.pub
 ```bash
 ssh-keygen -t rsa -b 4096 -C "youremail@example.com" -N "" -f ~/.ssh/id_rsa
 ```
-
-*(Insert an image or link here showing how to generate SSH keys on macOS/Linux/Windows.)*
 
 ---
 
@@ -165,8 +151,6 @@ ssh -L 8080:localhost:8080 -L 8888:localhost:8888 <USERNAME>@<EXTERNAL_IP> -N
 - **`-L 8888:localhost:8888`**: Forwards local port 8888 to the VM’s port 8888 (Jupyter).  
 - **`-N`**: Instructs SSH not to execute remote commands (useful for pure port forwarding).  
 
-*(Optional screenshot or link explaining SSH tunneling in detail.)*
-
 > **Keep this terminal window open** as it maintains the tunnel. If you close it, you lose access to those forwarded ports.
 
 ---
@@ -181,7 +165,7 @@ ssh -L 8080:localhost:8080 -L 8888:localhost:8888 <USERNAME>@<EXTERNAL_IP> -N
 2. You’ll be prompted for the password you set during installation (`<CODE_SERVER_PW>`).  
 3. After logging in, you can use code-server just like VS Code in your browser.
 
-*(Insert an image or link here to illustrate code-server’s UI.)*
+![Code Server](imgs/code-server.png "Caption: Accessing Code Server locally")
 
 ---
 
@@ -204,7 +188,7 @@ ssh -L 8080:localhost:8080 -L 8888:localhost:8888 <USERNAME>@<EXTERNAL_IP> -N
    ```
 3. You should see the Jupyter Notebook interface.
 
-*(Insert an image or link showing the Jupyter Notebook interface.)*
+![Jupyter Notebook](imgs/jupyter-notebook.png "Caption: Accessing Jupyter Notebook locally")
 
 ---
 
@@ -268,12 +252,10 @@ ssh -L 8080:localhost:8080 -L 8888:localhost:8888 <USERNAME>@<EXTERNAL_IP> -N
   sudo apt install -y git docker.io
   ```
 
-*(Consider adding more troubleshooting tips or images showing common error messages.)*
-
 ---
 
 ## Conclusion
 
-By following these steps, you’ll have a fully functional Ubuntu VM on GCP with **code-server** and **Jupyter Notebook** accessible through secure SSH tunnels.  
-- Use `http://localhost:8080` for code-server.  
+By following these steps, you’ll have a fully functional Ubuntu VM on GCP with **Code Server** and **Jupyter Notebook** accessible through secure SSH tunnels.  
+- Use `http://localhost:8080` for Code Server.  
 - Use `http://localhost:8888` for Jupyter Notebook.
