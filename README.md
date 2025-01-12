@@ -149,7 +149,14 @@ ssh -L 8080:localhost:8080 -L 8888:localhost:8888 <USERNAME>@<EXTERNAL_IP> -N
 - **`-L 8888:localhost:8888`**: Forwards local port 8888 to the VM’s port 8888 (Jupyter).  
 - **`-N`**: Instructs SSH not to execute remote commands (useful for pure port forwarding).  
 
-> **Keep this terminal window open** as it maintains the tunnel. If you close it, you lose access to those forwarded ports.
+> **Note:** If you're prompted with:
+> 
+> ```
+> Are you sure you want to continue connecting (yes/no/[fingerprint])?
+> ```
+> Type `yes` to proceed. This prompt appears when the server's host key is not yet recognized on your local machine.
+
+> **Important:** Keep this terminal window open to maintain the SSH tunnel. Closing it will stop the port forwarding, and you will lose access to code-server and Jupyter Notebook.
 
 ---
 
@@ -170,7 +177,7 @@ ssh -L 8080:localhost:8080 -L 8888:localhost:8888 <USERNAME>@<EXTERNAL_IP> -N
 <a name="access-jupyter"></a>
 ## 9. Access Jupyter Notebook
 
-1. In the VM terminal, check the Jupyter Notebook logs to retrieve the token:
+1. Open up a new VM terminal, check the Jupyter Notebook logs to retrieve the token:
 
    ```bash
    docker logs jupyter-notebook
@@ -180,11 +187,7 @@ ssh -L 8080:localhost:8080 -L 8888:localhost:8888 <USERNAME>@<EXTERNAL_IP> -N
    ```
    http://127.0.0.1:8888/?token=...
    ```
-2. Replace `127.0.0.1` with `localhost` and open it in your browser:
-   ```
-   http://localhost:8888/?token=<YOUR_TOKEN>
-   ```
-3. You should see the Jupyter Notebook interface.
+2. Follow the link to open it in your browser (or replace 127.0.0.1 with localhost), and you should see the Jupyter Notebook interface.
 
 ![Jupyter Notebook](imgs/jupyter-notebook.png "Caption: Accessing Jupyter Notebook locally")
 
