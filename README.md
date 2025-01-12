@@ -1,6 +1,6 @@
-# Set Up an Ubuntu VM on Google Cloud Platform (GCP) with Jupyter Notebook and Code-Server
+# Set Up an Ubuntu VM on Google Cloud Platform (GCP) with Jupyter Notebook and Code Server
 
-This guide walks you through creating an Ubuntu VM on GCP, installing Jupyter Notebook and code-server, and securely accessing these services via SSH tunneling from your local machine.  
+This guide walks you through creating an Ubuntu VM on GCP, installing Code Server and Jupyter Notebook, and securely accessing these services via SSH tunneling from your local machine.  
 
  [![](https://mermaid.ink/img/pako:eNqdkk9rAjEQxb_KEKFYcGGLILqHgrrQP2gRrT104yFmE3cxm5FsUivqd2_WqghtD3VOM3kvvzeBbAnHVJCISIVrnjFjYTCmGnx1kwFypmDIeJZrMYMgAEomk0d4dVoLBfURGltCO2yHcANtX7eUeNc99BJKHvojeBtCfTp32jqvzL6xvcqxo2TsdAlVeFAK8yEMoIYKeOBRsoN-cqlOn367_-xWG-vVF7RijriEXEOMfHmJ81Xh4uSH-cD887FVSM_g2i8AXc5FWR62-qc_PiWUdqMEdEHmSkW1tkybUjZKa3Apolqz2Tz2wTpPbRbdrT4bHBWaqBaG4SWhdyRIyTut1jWE_pkgZOcqQnwlgTRIIUzB8tT_uG1FpMRmohCURL5NhWROWUqo3nsrcxYnG81JZI0TDWLQLTISSaZKP7lVyqyIc7YwrDifrph-RzzN-y-jxOyG?type=png)](https://mermaid.live/edit#pako:eNqdkk9rAjEQxb_KEKFYcGGLILqHgrrQP2gRrT104yFmE3cxm5FsUivqd2_WqghtD3VOM3kvvzeBbAnHVJCISIVrnjFjYTCmGnx1kwFypmDIeJZrMYMgAEomk0d4dVoLBfURGltCO2yHcANtX7eUeNc99BJKHvojeBtCfTp32jqvzL6xvcqxo2TsdAlVeFAK8yEMoIYKeOBRsoN-cqlOn367_-xWG-vVF7RijriEXEOMfHmJ81Xh4uSH-cD887FVSM_g2i8AXc5FWR62-qc_PiWUdqMEdEHmSkW1tkybUjZKa3Apolqz2Tz2wTpPbRbdrT4bHBWaqBaG4SWhdyRIyTut1jWE_pkgZOcqQnwlgTRIIUzB8tT_uG1FpMRmohCURL5NhWROWUqo3nsrcxYnG81JZI0TDWLQLTISSaZKP7lVyqyIc7YwrDifrph-RzzN-y-jxOyG) 
 
@@ -10,11 +10,11 @@ This guide walks you through creating an Ubuntu VM on GCP, installing Jupyter No
 1. [Create an Ubuntu VM on GCP](#create-a-vm)
 2. [Connect to the VM](#connect-to-vm)
 3. [Clone the Repository](#clone-repo)
-4. [Install code-server and Jupyter Notebook](#install-tools)
+4. [Install Code Server and Jupyter Notebook](#install-tools)
 5. [Set Up SSH Keys (Local)](#setup-ssh-keys-local)
 6. [Add SSH Key to Remote VM](#add-ssh-key-remote)
 7. [Establish SSH Tunnels](#ssh-tunnel)
-8. [Access code-server](#access-codeserver)
+8. [Access Code Server](#access-codeserver)
 9. [Access Jupyter Notebook](#access-jupyter)
 10. [Debugging & Troubleshooting](#debugging)
 
@@ -80,7 +80,7 @@ sudo apt update && sudo apt install -y git
 ---
 
 <a name="install-tools"></a>
-## 4. Install code-server and Jupyter Notebook
+## 4. Install Code Server and Jupyter Notebook
 
 In the same directory, make the installation script executable and run it:
 
@@ -89,7 +89,7 @@ chmod +x install.sh
 ./install.sh <CODE_SERVER_PW>
 ```
 
-- **`<CODE_SERVER_PW>`**: Replace this placeholder with your desired password for code-server authentication.
+- **`<CODE_SERVER_PW>`**: Replace this placeholder with your desired password for Code Server authentication.
 - You will be prompted to confirm installation steps if necessary.
 
 ---
@@ -145,7 +145,7 @@ ssh -L 8080:localhost:8080 -L 8888:localhost:8888 <USERNAME>@<EXTERNAL_IP> -N
 
 - **`<USERNAME>`**: Your VM username (e.g., `yourGCPUsername`).  
 - **`<EXTERNAL_IP>`**: Public IP of your VM (found in the GCP console).  
-- **`-L 8080:localhost:8080`**: Forwards local port 8080 to the VM’s port 8080 (code-server).  
+- **`-L 8080:localhost:8080`**: Forwards local port 8080 to the VM’s port 8080 (Code Server).  
 - **`-L 8888:localhost:8888`**: Forwards local port 8888 to the VM’s port 8888 (Jupyter).  
 - **`-N`**: Instructs SSH not to execute remote commands (useful for pure port forwarding).  
 
@@ -154,14 +154,14 @@ ssh -L 8080:localhost:8080 -L 8888:localhost:8888 <USERNAME>@<EXTERNAL_IP> -N
 ---
 
 <a name="access-codeserver"></a>
-## 8. Access code-server
+## 8. Access Code Server
 
 1. On your **local machine**, open a web browser and go to:
    ```
    http://localhost:8080
    ```
 2. You’ll be prompted for the password you set during installation (`<CODE_SERVER_PW>`).  
-3. After logging in, you can use code-server just like VS Code in your browser.
+3. After logging in, you can use Code Server just like VS Code in your browser.
 
 ![Code Server](imgs/code-server.png "Caption: Accessing Code Server locally")
 
@@ -235,7 +235,7 @@ ssh -L 8080:localhost:8080 -L 8888:localhost:8888 <USERNAME>@<EXTERNAL_IP> -N
      ```bash
      ps aux | grep ssh
      ```
-  2. Ensure code-server/Jupyter are running:
+  2. Ensure Code Server/Jupyter are running:
      ```bash
      systemctl status code-server
      docker ps
